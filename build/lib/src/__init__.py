@@ -1,0 +1,3 @@
+# The __init__.py file is a special file used to indicate that a directory should be considered a Python package. This file can be empty or can contain Python code to initialize the package.
+# When Python imports a directory that contains an __init__.py file, it treats it as a package and allows you to import modules or subpackages contained within it.
+# Here in our case "src" will be considered as a package as we have mentioned __init__.py file inside this folder
