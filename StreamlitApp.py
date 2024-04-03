@@ -7,6 +7,7 @@ from src.mcqgenerator.utils import read_file,get_table_data
 from src.mcqgenerator.logger import logging
 from dotenv import load_dotenv
 
+
 from langchain.callbacks import get_openai_callback
 
 from src.mcqgenerator.MCQGenerator import generate_evaluate_chain

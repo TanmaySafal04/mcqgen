@@ -5,5 +5,7 @@ python-dotenv
 PyPDF2
 langchain-openai
 datetime
+langchain-community
+Gradio
 
 -e .

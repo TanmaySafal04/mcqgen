@@ -59,5 +59,6 @@ quiz_evaluation_prompt=PromptTemplate(input_variables=["subject", "quiz"], templ
 
 review_chain=LLMChain(llm=llm, prompt=quiz_evaluation_prompt, output_key="review", verbose=True)
 
+#Combining both chains
 generate_evaluate_chain=SequentialChain(chains=[quiz_chain, review_chain], input_variables=["text", "number", "subject", "tone", "response_json"],
                                         output_variables=["quiz", "review"], verbose=True,)
