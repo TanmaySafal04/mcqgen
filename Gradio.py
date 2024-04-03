@@ -6,14 +6,47 @@ import streamlit as st
 from src.mcqgenerator.utils import read_file,get_table_data
 from src.mcqgenerator.logger import logging
 from dotenv import load_dotenv
-import Gradio as gr
-from langchain.callbacks import get_openai_callback
+import gradio as gr
+#from langchain.callbacks import get_openai_callback
 
 from src.mcqgenerator.MCQGenerator import generate_evaluate_chain
 
 #loading json file
-with open("D:\GenAI\mcqgen\Response.json","r") as file:
-    RESPONSE_JSON=json.load(file)
+# with open("Response.json","r") as file:
+#     RESPONSE_JSON=json.load(file)
+
+RESPONSE_JSON = {
+    "1": {
+        "mcq": "multiple choice question",
+        "options": {
+            "a": "choice here",
+            "b": "choice here",
+            "c": "choice here",
+            "d": "choice here",
+        },
+        "correct": "correct answer",
+    },
+    "2": {
+        "mcq": "multiple choice question",
+        "options": {
+            "a": "choice here",
+            "b": "choice here",
+            "c": "choice here",
+            "d": "choice here",
+        },
+        "correct": "correct answer",
+    },
+    "3": {
+        "mcq": "multiple choice question",
+        "options": {
+            "a": "choice here",
+            "b": "choice here",
+            "c": "choice here",
+            "d": "choice here",
+        },
+        "correct": "correct answer",
+    },
+}
 
 gr.close_all()
 
@@ -21,7 +54,7 @@ def mcq(input_file,subject,tone,mcq_count):
     text = read_file(input_file)
     try:          
         # Count tokens and API call cost in $USD
-        with get_openai_callback() as cb:
+        # with get_openai_callback() as cb:
             output=generate_evaluate_chain(
             {
             "text": text,
@@ -36,10 +69,10 @@ def mcq(input_file,subject,tone,mcq_count):
         gr.error("Error")
 
                
-    print(f"Total Tokens:{cb.total_tokens}")
-    print(f"Prompt Tokens:{cb.prompt_tokens}")
-    print(f"Completion Tokens:{cb.completion_tokens}")
-    print(f"Total Cost:{cb.total_cost}")
+    # print(f"Total Tokens:{cb.total_tokens}")
+    # print(f"Prompt Tokens:{cb.prompt_tokens}")
+    # print(f"Completion Tokens:{cb.completion_tokens}")
+    # print(f"Total Cost:{cb.total_cost}")
 
     if isinstance(output,dict):
                         #Extract quiz data from response
@@ -57,17 +90,20 @@ def mcq(input_file,subject,tone,mcq_count):
     return df
 
 #Inputs
-subject = gr.inputs.Textbox(label="Subject")
-tone =  gr.inputs.Textbox(label="Difficulty level")
-mcq_count =  gr.inputs.Number(label="No. of MCQs")
-upload_file = gr.inputs.File(label="Upload File", type="file")
+subject = gr.Textbox(label="Subject")
+tone =  gr.Textbox(label="Difficulty level")
+mcq_count =  gr.Number(label="No. of MCQs")
+upload_file = gr.File(label="Upload File", file_types=["file"])
+
+#Output
+output_table = gr.Textbox(label="Filtered DataFrame")
 
 
 
 demo = gr.Interface(fn=mcq,
                     title="MCQ Creator App",
                     inputs=[upload_file,subject,tone,mcq_count],
-                    output=gr.Dataframe(type="pandas",header =["MCQ","CHOICES","Correct Answer"] row_count=mcq_count, col_count=3)
+                    outputs=output_table
                                        
                     )
 

@@ -7,12 +7,12 @@ from dotenv import load_dotenv
 from src.mcqgenerator.utils import read_file,get_table_data
 from src.mcqgenerator.logger import logging
 
-from langchain.llms import OpenAI
+from langchain_community.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from langchain.chains import SequentialChain
 
-from langchain.callbacks import get_openai_callback
+#from langchain.callbacks import get_openai_callback
 import PyPDF2
 
 load_dotenv()
