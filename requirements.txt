@@ -7,5 +7,6 @@ langchain-openai
 datetime
 langchain-community
 Gradio
-
+pandas 
+numpy
 -e .
